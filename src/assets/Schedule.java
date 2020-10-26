@@ -1,30 +1,51 @@
 package assets;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Schedule {
 	
 	
-	private ArrayList<Task> tasks = new ArrayList<Task>();
-	private int winSize;
+	private static Queue<Task> tasks;
+	private static int winSize;
 	
 	
-	public Schedule(ArrayList<Task> tasks, int winSize) {
+	public Schedule(Queue<Task> tasks, int winSize) {
 		this.tasks = tasks;
 		this.winSize = winSize;
 	}
+	
+	
+	
+	public static void execute(){
+		Queue<Task> window = new LinkedList<Task>();
+		for(int i = 0; i < winSize; i++) {
+			
+			window.add(tasks.remove());
+			
+		}
+		
+		int x = 0; //index within the window we're currently on
+		while(!tasks.isEmpty()) {
+			//the window we're looking at
+			Task t1 = window.remove();
+			Task t2 = window.remove();
+			Task t3 = window.remove();
+			
+			//compute the heuristic
+			int h = Math.min(t1.getTime() + t1.getDeadline(), Math.min(t2.getTime() + t2.getDeadline(),  t3.getTime() + t3.getDeadline()));
+			
+			
+			
+			
+			
+		}
+	}
 
 	
-	
-	public void sort() {
-		
+			
 		/**
-		 * Here I was thinking we could use Mergesort or some sorting algorithm to
-		 * sort each task by deadline. (We'll need to sort by the Task's deadline property, i.e. the deadline)
-		 * 
-		 * 
-		 * once that's sorted, we have our "schedule", meaning we know what order every window should be executed
-		 * in. 
+
 		 * 
 		 * I think for the processes we need to figure out what libraries allow for two processors to run,
 		 * or we might not need need to worry about it.
@@ -46,8 +67,7 @@ public class Schedule {
 		
 		
 		
-	}
-	
+
 	
 	
 	

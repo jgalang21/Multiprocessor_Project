@@ -7,18 +7,18 @@ package assets;
  * @author Jeremy + Jinwoo
  *
  */
-public class Task {
+public class Task implements Comparable<Task>{
 	
 	
 	private String name;
-	private int ready_time;
-	private int wcet; 
-	private int deadline;
+	private Integer ready_time;
+	private Integer wcet; 
+	private Integer deadline;
 	private String usage;
 	
 	
 	//we might need to add another parameter for the laxity heuristic that the professor emailed us about (?)
-	public Task(String name, int ready, int exec, int deadline, String usage) {
+	public Task(String name, int ready, int exec, int deadline, String usage)  {
 		this.name = name;
 		this.ready_time = ready;
 		this.wcet = exec;
@@ -46,7 +46,19 @@ public class Task {
 	public String getUsage() {
 		return usage;
 	}
+
+	/**
+	 * This comparator basically just helps sort the task by deadline 
+	 */
+	@Override
+	public int compareTo(Task o) {
+		if(this.getDeadline() < o.getDeadline()) {
+			return o.getDeadline();
+		}
+		return this.deadline.compareTo(o.deadline);
+	}
 	
+
 	
 
 }
