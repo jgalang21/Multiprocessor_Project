@@ -17,9 +17,9 @@ public class Main {
 		int winSize = 3; //window size
 		
 		Task x = new Task("T1", 0, 5, 10, "N");
-		Task x2 = new Task("T2", 0, 5, 1, "N");
-		Task x3 = new Task("T3", 0, 5, 11, "N");
-		Task x4 = new Task("T4", 0, 5, 4, "N");
+		Task x2 = new Task("T2", 0, 2, 1, "N");
+		Task x3 = new Task("T3", 0, 6, 11, "N");
+		Task x4 = new Task("T4", 0, 3, 4, "N");
 		
 		
 		List<Task> list = new ArrayList<Task>();
@@ -31,14 +31,11 @@ public class Main {
 		printandSortTasks(list);
 	
 		//put all tasks ins queue
-		Queue<Task> q = new LinkedList<Task>();
-		for(int i = 0; i < list.size(); i++) {
-			q.add(list.get(i));
-		}
+	
 		
-		
-		Schedule schedule = new Schedule(q, winSize);
+		Schedule schedule = new Schedule(list, winSize);
 		schedule.execute();
+		
 		
 		
 		

@@ -46,6 +46,10 @@ public class Task implements Comparable<Task>{
 	public String getUsage() {
 		return usage;
 	}
+	
+	public int calc_heuristic() {
+		return ready_time + deadline;
+	}
 
 	/**
 	 * This comparator basically just helps sort the task by deadline 

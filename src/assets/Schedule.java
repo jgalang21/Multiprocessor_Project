@@ -1,47 +1,101 @@
 package assets;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Schedule {
 	
 	
-	private static Queue<Task> tasks;
+	private static List<Task> tasks;
 	private static int winSize;
+	private static Stack<Integer> p1 = new Stack<Integer>(); 
+	private static Stack<Integer> p2 = new Stack<Integer>();
 	
 	
-	public Schedule(Queue<Task> tasks, int winSize) {
+	public Schedule(List<Task> tasks, int winSize) {
 		this.tasks = tasks;
 		this.winSize = winSize;
 	}
 	
 	
 	
-	public static void execute(){
-		Queue<Task> window = new LinkedList<Task>();
-		for(int i = 0; i < winSize; i++) {
-			
-			window.add(tasks.remove());
-			
-		}
+	public static void execute()  {
+	
+		boolean completed = false;
+	
+		int s = 0; //index within the window we're currently on
 		
-		int x = 0; //index within the window we're currently on
-		while(!tasks.isEmpty()) {
-			//the window we're looking at
-			Task t1 = window.remove();
-			Task t2 = window.remove();
-			Task t3 = window.remove();
+		
+		while(completed == false) {
 			
-			//compute the heuristic
-			int h = Math.min(t1.getTime() + t1.getDeadline(), Math.min(t2.getTime() + t2.getDeadline(),  t3.getTime() + t3.getDeadline()));
+			try {
+				//the window we're looking at
+				Task t1 = tasks.get(s);
+				Task t2 = tasks.get(s+1);
+				Task t3 = tasks.get(s+2);
+				
+				
+				int h = Math.min(t1.calc_heuristic(), Math.min(t2.calc_heuristic(), t3.calc_heuristic()));
+					
+	
+				System.out.println("Smallest Heuristic Value:" + h);
+				
+				if(h == t1.calc_heuristic()) {
+					if(p1.isEmpty() || p1.peek() < t1.getExecTime()) {
+						p1.push(t1.getExecTime());
+					}
+					
+					else{
+						p2.push(t1.getExecTime());
+					}
+					
+				}
+				else if(h == t2.calc_heuristic()) {
+					if(p1.isEmpty() || p1.peek() < t2.getExecTime()) {
+						p1.push(t2.getExecTime());
+					}
+					
+					else{
+						p2.push(t2.getExecTime());
+					}
+					
+				}
+				
+				else if(h == t3.calc_heuristic()) {
+					if(p1.isEmpty() || p1.peek() < t3.getExecTime()) {
+						p1.push(t3.getExecTime());
+					}
+					
+					else{
+						p2.push(t3.getExecTime());
+					}
+					
+				}
+				if(!p1.isEmpty()) {
+					System.out.println("Processor 1: " + p1.peek());
+				}
+				if(!p2.isEmpty()) {
+					System.out.println("Processor 2: " + p2.peek());
+				}
+				
+				s++;
 			
-			
+			}
+			catch(Exception e ){
+				completed = true;
+				
+			}
 			
 			
 			
 		}
 	}
 
+	
 	
 			
 		/**
