@@ -40,11 +40,9 @@ public class Schedule {
 				Task t2 = tasks.get(s+1);
 				Task t3 = tasks.get(s+2);
 				
-				System.out.println("Hello");
 				
-				System.out.println(p1.peek() + "this work?");
 				
-				//int h1 = Math.max(t1.getTime(), p1.peek());
+				int h1 = Math.max(t1.getTime(), p1.peek(), 0);
 				
 				int h = Math.min(t1.calc_heuristic(), Math.min(t2.calc_heuristic(), t3.calc_heuristic()));
 					
@@ -100,6 +98,18 @@ public class Schedule {
 			
 			
 		}
+	}
+	
+	public int highest_From_Three(int num1, int num2, int num3){
+		int result = 0;
+		if (num1 >= num2 && num1 >= num3) {
+			result = num1;
+		} else if (num2 >= num1 && num2 >= num3) {
+			result = num2;
+		} else {
+			result = num3;
+		}
+		return result;
 	}
 
 	
