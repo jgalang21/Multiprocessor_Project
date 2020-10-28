@@ -54,7 +54,7 @@ public class Main { //check
 		
 		System.out.println("-------------------------");
 		//Did some research, Collections.sort runs at n*logn and mergesort has the same time complexity..
-		Collections.sort(list, Comparator.comparing(Task::getDeadline));
+		Collections.sort(list, Comparator.comparing(Task::getExecTime));
 		
 		System.out.println("AFTER: (Sorted)");
 		for(int i = 0; i < list.size(); i++) {
