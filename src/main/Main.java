@@ -18,7 +18,7 @@ public class Main { //check
 		
 		
 		Task x = new Task("T1", 0, 5, 10, "N");
-		Task x2 = new Task("T2", 0, 2, 1, "N");
+		Task x2 = new Task("T2", 0, 3, 4, "N");
 		Task x3 = new Task("T3", 0, 6, 11, "N");
 		Task x4 = new Task("T4", 0, 3, 4, "N");
 		
@@ -47,18 +47,20 @@ public class Main { //check
 		System.out.println("BEFORE: (Unsorted)");
 		for(int i = 0; i < list.size(); i++) {
 			System.out.println("Task Name: " + list.get(i).getName());
+			System.out.println("Exec Time: " + list.get(i).getExecTime());
 			System.out.println("Deadline: " + list.get(i).getDeadline());
 			System.out.println();
 			
 		}
 		
-		System.out.println("-------------------------");
+		System.out.println("--------------------------------");
 		//Did some research, Collections.sort runs at n*logn and mergesort has the same time complexity..
-		Collections.sort(list, Comparator.comparing(Task::getExecTime));
+		Collections.sort(list, Comparator.comparing(Task::getDeadline));
 		
 		System.out.println("AFTER: (Sorted)");
 		for(int i = 0; i < list.size(); i++) {
 			System.out.println("Task Name: " + list.get(i).getName());
+			System.out.println("Exec Time: " + list.get(i).getExecTime());
 			System.out.println("Deadline: " + list.get(i).getDeadline());
 			System.out.println();
 	

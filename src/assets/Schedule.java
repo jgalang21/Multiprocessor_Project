@@ -24,11 +24,13 @@ public class Schedule {
 	
 	
 	public static void execute()  {
-	
+		
 		boolean completed = false;
 	
 		int s = 0; //index within the window we're currently on
 		
+		p1.push(0);
+		p2.push(0);
 		
 		while(completed == false) {
 			
@@ -38,6 +40,11 @@ public class Schedule {
 				Task t2 = tasks.get(s+1);
 				Task t3 = tasks.get(s+2);
 				
+				System.out.println("Hello");
+				
+				System.out.println(p1.peek() + "this work?");
+				
+				//int h1 = Math.max(t1.getTime(), p1.peek());
 				
 				int h = Math.min(t1.calc_heuristic(), Math.min(t2.calc_heuristic(), t3.calc_heuristic()));
 					
