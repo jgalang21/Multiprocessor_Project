@@ -11,10 +11,11 @@ import assets.Schedule;
 import assets.Task;
 
 
-public class Main {
+public class Main { //check
 	public static void main(String args[]) {
 		
 		int winSize = 3; //window size
+		
 		
 		Task x = new Task("T1", 0, 5, 10, "N");
 		Task x2 = new Task("T2", 0, 2, 1, "N");
