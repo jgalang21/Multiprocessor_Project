@@ -40,11 +40,14 @@ public class Schedule {
 				Task t2 = tasks.get(s+1);
 				Task t3 = tasks.get(s+2);
 				
+			
+				
+				int h1 = highest_From_Three(t1.getTime(), p1.peek(), 0);
+				int h2 = highest_From_Three(t2.getTime(), p1.peek(), 0);
+				int h3 = highest_From_Three(t3.getTime(), p1.peek(), 0);
 				
 				
-				int h1 = Math.max(t1.getTime(), p1.peek(), 0);
-				
-				int h = Math.min(t1.calc_heuristic(), Math.min(t2.calc_heuristic(), t3.calc_heuristic()));
+				int h = Math.min(h1, Math.min(h2, h3));
 					
 	
 				System.out.println("Smallest Heuristic Value:" + h);
@@ -100,7 +103,7 @@ public class Schedule {
 		}
 	}
 	
-	public int highest_From_Three(int num1, int num2, int num3){
+	public static int highest_From_Three(int num1, int num2, int num3){
 		int result = 0;
 		if (num1 >= num2 && num1 >= num3) {
 			result = num1;
