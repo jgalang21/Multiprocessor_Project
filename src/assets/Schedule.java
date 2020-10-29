@@ -42,14 +42,13 @@ public class Schedule {
 				
 			
 				
-				int h1 = highest_From_Three(t1.getTime(), p1.peek(), 0);
-				int h2 = highest_From_Three(t2.getTime(), p1.peek(), 0);
-				int h3 = highest_From_Three(t3.getTime(), p1.peek(), 0);
+				int h1 = t1.getDeadline() + highest_From_Three(t1.getTime(), p1.peek(), 0);
+				int h2 = t2.getDeadline() + highest_From_Three(t2.getTime(), p1.peek(), 0);
+				int h3 = t3.getDeadline() + highest_From_Three(t3.getTime(), p1.peek(), 0);
 				
 				
 				int h = Math.min(h1, Math.min(h2, h3));
-					
-	
+				
 				System.out.println("Smallest Heuristic Value:" + h);
 				
 				if(h == t1.calc_heuristic()) {
