@@ -17,17 +17,19 @@ public class Main { //check
 		int winSize = 3; //window size
 		
 		
-		Task x = new Task("T1", 0, 5, 10, "N");
-		Task x2 = new Task("T2", 0, 3, 4, "N");
-		Task x3 = new Task("T3", 0, 6, 11, "N");
-		Task x4 = new Task("T4", 0, 3, 4, "N");
+		Task x = new Task("T1", 0, 6, 10, "N");
+		Task x2 = new Task("T2", 2, 7, 13, "S");
+		Task x3 = new Task("T3", 1, 3, 16, "E");
+		Task x4 = new Task("T4", 2, 7, 17, "N");
+		Task x5 = new Task("T5", 3, 9, 19, "N");
 		
 		
 		List<Task> list = new ArrayList<Task>();
-		list.add(x4);
 		list.add(x);
-		list.add(x3);
 		list.add(x2);
+		list.add(x3);
+		list.add(x4);
+		list.add(x5);
 		
 		printandSortTasks(list);
 	

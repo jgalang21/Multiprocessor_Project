@@ -14,6 +14,7 @@ public class Schedule {
 	private static int winSize;
 	private static Stack<Integer> p1 = new Stack<Integer>(); 
 	private static Stack<Integer> p2 = new Stack<Integer>();
+	private static List<Resource> resource;
 	
 	
 	public Schedule(List<Task> tasks, int winSize) {
@@ -36,22 +37,37 @@ public class Schedule {
 			
 			try {
 				//the window we're looking at
+				// s: "0 1 2" 3 4 
+				// Task 1 2 3 selected 
 				Task t1 = tasks.get(s);
 				Task t2 = tasks.get(s+1);
 				Task t3 = tasks.get(s+2);
+				int num_task = 3;
 				
-			
+				//Resource: shared resource can use shared and exclusive resources
+				//Exclusive: Can only use exclusive resources	
+				int h1 = 0;
+				int h2 = 0;
+				int h3 = 0;
 				
-				int h1 = t1.getDeadline() + highest_From_Three(t1.getTime(), p1.peek(), 0);
-				int h2 = t2.getDeadline() + highest_From_Three(t2.getTime(), p1.peek(), 0);
-				int h3 = t3.getDeadline() + highest_From_Three(t3.getTime(), p1.peek(), 0);
 				
+				h2 = t2.calc_heuristic(t2.getTime(), p1.peek(), 0);
+				h3 = t3.calc_heuristic(t3.getTime(), p1.peek(), 0);
+				
+				
+				if (t1.getUsage().equals("N")) {
+					h1 = t1.calc_heuristic(t1.getTime(), p1.peek(), 0);
+				} else if (t1.getUsage().equals("S")) {
+					
+				} else if (t1.getUsage().equals("E")) {
+					
+				}
 				
 				int h = Math.min(h1, Math.min(h2, h3));
 				
 				System.out.println("Smallest Heuristic Value:" + h);
 				
-				if(h == t1.calc_heuristic()) {
+				if(h == h1) {
 					if(p1.isEmpty() || p1.peek() < t1.getExecTime()) {
 						p1.push(t1.getExecTime());
 					}
@@ -61,7 +77,7 @@ public class Schedule {
 					}
 					
 				}
-				else if(h == t2.calc_heuristic()) {
+				else if(h == h2) {
 					if(p1.isEmpty() || p1.peek() < t2.getExecTime()) {
 						p1.push(t2.getExecTime());
 					}
@@ -72,7 +88,7 @@ public class Schedule {
 					
 				}
 				
-				else if(h == t3.calc_heuristic()) {
+				else if(h == h3) {
 					if(p1.isEmpty() || p1.peek() < t3.getExecTime()) {
 						p1.push(t3.getExecTime());
 					}

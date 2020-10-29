@@ -47,8 +47,9 @@ public class Task implements Comparable<Task>{
 		return usage;
 	}
 	
-	public int calc_heuristic() {
-		return ready_time + deadline;
+	public int calc_heuristic(int ready, int process, int resource) {
+		
+		return highest_From_Three(ready, process, resource) + deadline;
 	}
 
 	/**
@@ -62,6 +63,17 @@ public class Task implements Comparable<Task>{
 		return this.deadline.compareTo(o.deadline);
 	}
 	
+	public static int highest_From_Three(int num1, int num2, int num3){
+		int result = 0;
+		if (num1 >= num2 && num1 >= num3) {
+			result = num1;
+		} else if (num2 >= num1 && num2 >= num3) {
+			result = num2;
+		} else {
+			result = num3;
+		}
+		return result;
+	}
 
 	
 
