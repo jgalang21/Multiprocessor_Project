@@ -49,7 +49,7 @@ public class Main { //check
 		System.out.println("BEFORE: (Unsorted)");
 		for(int i = 0; i < list.size(); i++) {
 			System.out.println("Task Name: " + list.get(i).getName());
-			
+			System.out.println("Ready Time: " + list.get(i).getReadyTime());
 			System.out.println("Exec Time: " + list.get(i).getExecTime());
 			System.out.println("Deadline: " + list.get(i).getDeadline());
 			System.out.println();
