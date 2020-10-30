@@ -47,7 +47,6 @@ public class Schedule {
 				Task t2 = tasks.get(s+1);
 				Task t3 = tasks.get(s+2);
 				
-
 				
 				int num_task = 3;
 				
@@ -88,7 +87,9 @@ public class Schedule {
 					h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
 					h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
 					h3 = t3.calc_heuristic(t3.getReadyTime(), p2.peek(), 0);
+					
 					//Need Flexibility between p1.peek() and p2.peek()
+					
 					System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
@@ -96,23 +97,14 @@ public class Schedule {
 					p2_usage = 1;
 				}
 
-				
 				System.out.println("h1: " + h1);
 				System.out.println("h2: " + h2);
 				System.out.println("h3: " + h3);
-				
-				
-				
-
-				
-				
+		
 				System.out.println("t1 deadline: " + t1.getDeadline());
 				System.out.println("t2 deadline: " + t2.getDeadline());
 				System.out.println("t3 deadline: " + t3.getDeadline());
-				
-				
 
-				
 				int h = Math.min(h1, Math.min(h2, h3));
 				
 				System.out.println("Smallest Heuristic Value:" + h);

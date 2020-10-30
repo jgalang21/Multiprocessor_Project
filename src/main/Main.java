@@ -69,6 +69,12 @@ public class Main { //check
 			System.out.println();
 	
 		}
+
+
+		System.out.println("--------------------------------");
+		System.out.println("Begin Heuristic calculations:");
+		System.out.println("--------------------------------");
+		
 		
 	}
 	
