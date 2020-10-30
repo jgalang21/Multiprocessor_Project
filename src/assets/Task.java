@@ -31,7 +31,7 @@ public class Task implements Comparable<Task>{
 		return name;
 	}
 	
-	public int getTime() {
+	public int getReadyTime() {
 		return ready_time;
 	}
 	
