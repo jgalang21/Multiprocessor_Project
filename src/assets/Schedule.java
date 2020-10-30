@@ -11,6 +11,7 @@ public class Schedule {
 	
 	
 	private static List<Task> tasks;
+	private static List<Task> tasks_table;
 	private static int winSize;
 	private static Stack<Integer> p1 = new Stack<Integer>(); 
 	private static Stack<Integer> p2 = new Stack<Integer>();
@@ -39,9 +40,13 @@ public class Schedule {
 				//the window we're looking at
 				// s: "0 1 2" 3 4 
 				// Task 1 2 3 selected 
+				
 				Task t1 = tasks.get(s);
 				Task t2 = tasks.get(s+1);
 				Task t3 = tasks.get(s+2);
+				
+
+				
 				int num_task = 3;
 				
 				//Resource: shared resource can use shared and exclusive resources
@@ -51,53 +56,76 @@ public class Schedule {
 				int h3 = 0;
 				
 				
-				h2 = t2.calc_heuristic(t2.getTime(), p1.peek(), 0);
-				h3 = t3.calc_heuristic(t3.getTime(), p1.peek(), 0);
+				h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
+				h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
+				h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
 				
-				
-				if (t1.getUsage().equals("N")) {
-					h1 = t1.calc_heuristic(t1.getTime(), p1.peek(), 0);
-				} else if (t1.getUsage().equals("S")) {
-					
-				} else if (t1.getUsage().equals("E")) {
-					
-				}
+				System.out.println("h1: " + h1);
+				System.out.println("h2: " + h2);
+				System.out.println("h3: " + h3);
 				
 				int h = Math.min(h1, Math.min(h2, h3));
 				
 				System.out.println("Smallest Heuristic Value:" + h);
 				
 				if(h == h1) {
-					if(p1.isEmpty() || p1.peek() < t1.getExecTime()) {
-						p1.push(t1.getExecTime());
+					if(p1.peek() == 0) {
+						p1.push(t1.getExecTime() + t1.getReadyTime());
+					}
+					else if(p2.peek() == 0) {
+						p2.push(t1.getExecTime() + t1.getReadyTime());
 					}
 					
-					else{
-						p2.push(t1.getExecTime());
+					else {
+						if(p1.peek() > p2.peek()) {
+							p2.push(t1.getExecTime() + t1.getReadyTime());
+						}
+						else {
+							p1.push(t1.getExecTime() + t1.getReadyTime()); 
+						}
 					}
-					
 				}
+				
 				else if(h == h2) {
-					if(p1.isEmpty() || p1.peek() < t2.getExecTime()) {
-						p1.push(t2.getExecTime());
+					if(p1.peek() == 0) {
+						p1.push(t2.getExecTime() + t2.getReadyTime());
 					}
 					
-					else{
-						p2.push(t2.getExecTime());
+					else if(p2.peek() == 0) {
+						p2.push(t2.getExecTime() + t2.getReadyTime());
+					}
+					else {
+						if(p1.peek() > p2.peek()) {
+							p2.push(t2.getExecTime() + t2.getReadyTime());
+						}
+						else {
+							p1.push(t2.getExecTime() + t2.getReadyTime());
+						}
 					}
 					
 				}
 				
+				
 				else if(h == h3) {
-					if(p1.isEmpty() || p1.peek() < t3.getExecTime()) {
-						p1.push(t3.getExecTime());
+					if(p1.peek() == 0) {
+						p1.push(t3.getExecTime() + t3.getReadyTime());
 					}
-					
-					else{
-						p2.push(t3.getExecTime());
+					else if(p2.peek() == 0) {
+						p2.push(t3.getExecTime() + t3.getReadyTime());
 					}
+					else {
+						if(p1.peek() > p2.peek()) {
+							p2.push(t3.getExecTime() + t3.getReadyTime());
+						}
+						else {
+							p1.push(t3.getExecTime() + t3.getReadyTime());
+						}
+
+					}
+
 					
 				}
+				
 				if(!p1.isEmpty()) {
 					System.out.println("Processor 1: " + p1.peek());
 				}
