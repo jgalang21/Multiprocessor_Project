@@ -28,6 +28,8 @@ public class Schedule {
 	public static void execute()  {
 		
 		boolean completed = false;
+		int p1_usage = 0;
+		int p2_usage = 1;
 	
 		int s = 0; //index within the window we're currently on
 		
@@ -55,19 +57,51 @@ public class Schedule {
 				int h2 = 0;
 				int h3 = 0;
 				
+
 				
-				h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
-				h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
-				h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
+				if (p1_usage == 0 && p2_usage == 1) {
+					h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
+					h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
+					h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
+					//Need Flexibility between p1.peek() and p2.peek()
+					System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+					System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+					System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+					p1_usage = 1;
+					p2_usage = 0;
+				} else if (p1_usage == 1 && p2_usage == 0) {
+					h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
+					h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
+					h3 = t3.calc_heuristic(t3.getReadyTime(), p2.peek(), 0);
+					//Need Flexibility between p1.peek() and p2.peek()
+					System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+					System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+					System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+					p1_usage = 0;
+					p2_usage = 1;
+				}
+
 				
 				System.out.println("h1: " + h1);
 				System.out.println("h2: " + h2);
 				System.out.println("h3: " + h3);
 				
+				
+				
+
+				
+				
+				System.out.println("t1 deadline: " + t1.getDeadline());
+				System.out.println("t2 deadline: " + t2.getDeadline());
+				System.out.println("t3 deadline: " + t3.getDeadline());
+				
+				
+
+				
 				int h = Math.min(h1, Math.min(h2, h3));
 				
 				System.out.println("Smallest Heuristic Value:" + h);
-				
+				System.out.println("\n");
 				if(h == h1) {
 					if(p1.peek() == 0) {
 						p1.push(t1.getExecTime() + t1.getReadyTime());
@@ -131,6 +165,7 @@ public class Schedule {
 				}
 				if(!p2.isEmpty()) {
 					System.out.println("Processor 2: " + p2.peek());
+					System.out.println("\n");
 				}
 				
 				s++;
