@@ -28,6 +28,12 @@ public class Schedule {
 	public static void execute()  {
 		
 		boolean completed = false;
+		
+		
+		//i don't know how your resource class you made works, but i initialized them here
+		Resource r1 = new Resource("R1", 0);
+		Resource r2 = new Resource("R2", 0);
+		
 		int p1_usage = 0;
 		int p2_usage = 1;
 	
@@ -63,7 +69,7 @@ public class Schedule {
 
 				//Need Flexibility between p1.peek() and p2.peek()
 				//calc heuristic = deadline + EST
-				if (p1_usage == 0 && p2_usage == 1) {
+				if (p1_usage == 0 && p2_usage == 1) { //could replace these statements with the r1 and r2 i created above
 					if (t1.getUsage().equals("N")) {
 						h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
 						System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
@@ -72,6 +78,8 @@ public class Schedule {
 					
 					if (t2.getUsage().equals("S")) {
 						h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
+						
+						//call the "lock() or unlock()" method here
 						System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 					}
 					
@@ -120,10 +128,10 @@ public class Schedule {
 					
 					else {
 						if(p1.peek() > p2.peek()) {
-							p2.push(t1.getExecTime() + t1.getReadyTime());
+							p2.push(p2.peek()+ t1.getExecTime() + t1.getReadyTime()); //  ---- note that i added p2.peek() here
 						}
 						else {
-							p1.push(t1.getExecTime() + t1.getReadyTime()); 
+							p1.push(p1.peek() + t1.getExecTime() + t1.getReadyTime());  // same goes for here
 						}
 					}				}
 				
@@ -137,10 +145,10 @@ public class Schedule {
 					}
 					else {
 						if(p1.peek() > p2.peek()) {
-							p2.push(t2.getExecTime() + t2.getReadyTime());
+							p2.push(p2.peek() + t2.getExecTime() + t2.getReadyTime());
 						}
 						else {
-							p1.push(t2.getExecTime() + t2.getReadyTime());
+							p1.push(p1.peek() + t2.getExecTime() + t2.getReadyTime());
 						}
 
 					}
@@ -160,10 +168,10 @@ public class Schedule {
 					}
 					else {
 						if(p1.peek() > p2.peek()) {
-							p2.push(t3.getExecTime() + t3.getReadyTime());
+							p2.push(p2.peek() + t3.getExecTime() + t3.getReadyTime());
 						}
 						else {
-							p1.push(t3.getExecTime() + t3.getReadyTime());
+							p1.push(p1.peek() + t3.getExecTime() + t3.getReadyTime());
 						}
 						
 					}

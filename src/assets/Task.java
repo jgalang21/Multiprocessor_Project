@@ -15,7 +15,7 @@ public class Task implements Comparable<Task>{
 	private Integer wcet; 
 	private Integer deadline;
 	private String usage;
-	private boolean locked = false;
+
 	
 	
 	//we might need to add another parameter for the laxity heuristic that the professor emailed us about (?)
@@ -50,27 +50,7 @@ public class Task implements Comparable<Task>{
 	}
 	
 	
-	/**
-	 * New boolean getters and setters below
-	 * 
-	 * We could change the name of it to "Shared/exclusive" or something like that,
-	 * whatever works for you.
-	 */
-	public boolean isLocked() {
-		return locked;
-	}
-	
-	public boolean unlock() {
-		locked = true;
-		return locked;
-	}
-	
-	public boolean lock() {
-		locked = false;
-		return locked;
-	}
-	
-	
+
 	
 	public int calc_heuristic(int ready, int process, int resource) {
 		
