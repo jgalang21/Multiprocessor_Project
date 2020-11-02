@@ -16,13 +16,11 @@ public class Main { //check
 		
 		int winSize = 3; //window size
 		
-		
 		Task x = new Task("T1", 0, 6, 10, "N");
 		Task x2 = new Task("T2", 2, 7, 13, "S");
 		Task x3 = new Task("T3", 1, 3, 16, "E");
 		Task x4 = new Task("T4", 2, 7, 17, "N");
 		Task x5 = new Task("T5", 3, 9, 19, "N");
-		
 		
 		List<Task> list = new ArrayList<Task>();
 		list.add(x);

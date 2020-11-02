@@ -89,7 +89,7 @@ public class Schedule {
 					}
 					
 					p1_usage = 1;
-					p2_usage = 0;
+					//p2_usage = 0;
 					
 				} else if (p1_usage == 1 && p2_usage == 0) {
 					h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
@@ -101,8 +101,51 @@ public class Schedule {
 					System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
-					p1_usage = 0;
+					//p1_usage = 0;
 					p2_usage = 1;
+				}
+				else {
+					if(p1.peek() > p2.peek()) { // im still fixing this, i know this is wrong.
+						if (t1.getUsage().equals("N") || t2.getUsage().equals("N") || t3.getUsage().equals("N")  ) {
+							h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
+							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+							}
+
+						
+						if (t1 .getUsage().equals("S") || t2.getUsage().equals("S") || t3.getUsage().equals("S")) {
+							h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
+							
+							//call the "lock() or unlock()" method here
+							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+						}
+						
+						if (t1.getUsage().equals("E") || t2.getUsage().equals("E") || t3.getUsage().equals("E")) {
+							h3 = t3.calc_heuristic(t3.getReadyTime(), p2.peek(), 0);
+							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+						}
+						
+					}
+					if(p2.peek() > p1.peek()) {
+						if (t1.getUsage().equals("N") || t2.getUsage().equals("N") || t3.getUsage().equals("N")  ) {
+							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
+							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+							}
+
+						
+						if (t1 .getUsage().equals("S") || t2.getUsage().equals("S") || t3.getUsage().equals("S")) {
+							h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
+							
+							//call the "lock() or unlock()" method here
+							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						}
+						
+						if (t1.getUsage().equals("E") || t2.getUsage().equals("E") || t3.getUsage().equals("E")) {
+							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
+							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						}
+						
+					}
+					
 				}
 
 				System.out.println("h1: " + h1);

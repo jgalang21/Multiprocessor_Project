@@ -3,7 +3,7 @@ package assets;
 public class Resource {
 	private String Resource;
 	private int value;
-	private boolean locked;
+	private boolean locked = false;
 	
 	public Resource (String Resource, int value) {
 		this.Resource = Resource;
