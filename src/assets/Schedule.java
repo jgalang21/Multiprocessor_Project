@@ -89,7 +89,7 @@ public class Schedule {
 					}
 					
 					p1_usage = 1;
-					//p2_usage = 0;
+				//   p2_usage = 0;
 					
 				} else if (p1_usage == 1 && p2_usage == 0) {
 					h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
@@ -104,7 +104,7 @@ public class Schedule {
 					//p1_usage = 0;
 					p2_usage = 1;
 				}
-				else {
+				else {					
 					if(p1.peek() > p2.peek()) { // im still fixing this, i know this is wrong.
 						if (t1.getUsage().equals("N") || t2.getUsage().equals("N") || t3.getUsage().equals("N")  ) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
@@ -126,9 +126,9 @@ public class Schedule {
 						
 					}
 					if(p2.peek() > p1.peek()) {
-						if (t1.getUsage().equals("N") || t2.getUsage().equals("N") || t3.getUsage().equals("N")  ) {
-							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						if (t2.getUsage().equals("N") ) {
+							h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
+							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 							}
 
 						
@@ -139,10 +139,15 @@ public class Schedule {
 							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 						}
 						
-						if (t1.getUsage().equals("E") || t2.getUsage().equals("E") || t3.getUsage().equals("E")) {
+						if (t3.getUsage().equals("N")) {
 							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
 							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 						}
+						if (t1.getUsage().equals("E") ) {
+							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), p2.peek());
+							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
+							}
+						
 						
 					}
 					
