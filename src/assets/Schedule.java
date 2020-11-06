@@ -129,8 +129,19 @@ public class Schedule {
 						if (t2.getUsage().equals("N") ) {
 							h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
 							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
-							}
-
+						
+						}
+						
+						else if (t1.getUsage().equals("N")) {
+							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
+							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						}
+						
+						else if (t3.getUsage().equals("N")) {
+							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
+							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						}
+						
 						
 						if (t1 .getUsage().equals("S") || t2.getUsage().equals("S") || t3.getUsage().equals("S")) {
 							h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
@@ -139,10 +150,7 @@ public class Schedule {
 							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 						}
 						
-						if (t3.getUsage().equals("N")) {
-							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
-						}
+						
 						if (t1.getUsage().equals("E") ) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), p2.peek());
 							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
@@ -193,10 +201,10 @@ public class Schedule {
 					}
 					else {
 						if(p1.peek() > p2.peek()) {
-							p2.push(p2.peek() + t2.getExecTime() + t2.getReadyTime());
+							p2.push(p2.peek() + t2.getExecTime());
 						}
 						else {
-							p1.push(p1.peek() + t2.getExecTime() + t2.getReadyTime());
+							p1.push(p1.peek() + t2.getExecTime());
 						}
 
 					}
