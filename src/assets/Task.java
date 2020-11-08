@@ -50,6 +50,8 @@ public class Task implements Comparable<Task>{
 	}
 	
 	
+	
+	
 
 	
 	public int calc_heuristic(int ready, int process, int resource) {

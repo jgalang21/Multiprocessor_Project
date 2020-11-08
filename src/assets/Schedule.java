@@ -14,7 +14,7 @@ public class Schedule {
 	private static int winSize;
 	private static Stack<Integer> p1 = new Stack<Integer>();
 	private static Stack<Integer> p2 = new Stack<Integer>();
-	private static List<Resource> resource;
+	private static List<Task> executed = new ArrayList<Task>();
 
 	public Schedule(List<Task> tasks, int winSize) {
 		this.tasks = tasks;
@@ -97,18 +97,19 @@ public class Schedule {
 					System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					// p1_usage = 0;
 					p2_usage = 1;
-					
-					
-				} 
-				
-				
-				//Note that here you need to keep that all as if statements, adding "else if" seems to break the code
-				
+
+				}
+
+				// Note that here you need to keep that all as if statements, adding "else if"
+				// seems to break the code
+
 				else {
 					if (p1.peek() > p2.peek()) {
 						if (t1.getUsage().equals("N")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
 							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+						
+							
 						}
 
 						if (t2.getUsage().equals("N")) {
@@ -225,16 +226,21 @@ public class Schedule {
 				if (h == h1) {
 					if (p1.peek() == 0) {
 						p1.push(t1.getExecTime() + t1.getReadyTime());
+						executed.add(t1);
 
 					} else if (p2.peek() == 0) {
 						p2.push(t1.getExecTime() + t1.getReadyTime());
+						executed.add(t1);
 					}
 
 					else {
 						if (p1.peek() > p2.peek()) {
-							p2.push(p2.peek() + t1.getExecTime()); // ---- note that i added p2.peek() here
+							p2.push(p2.peek() + t1.getExecTime()); // no need to add ready time since we already know
+																	// p1/p2 isn't empty
+							executed.add(t1);
 						} else {
-							p1.push(p1.peek() + t1.getExecTime()); // same goes for here
+							p1.push(p1.peek() + t1.getExecTime());
+							executed.add(t1);
 						}
 					}
 				}
@@ -242,15 +248,19 @@ public class Schedule {
 				else if (h == h2) {
 					if (p1.peek() == 0) {
 						p1.push(t2.getExecTime() + t2.getReadyTime());
+						executed.add(t2);
 					}
 
 					else if (p2.peek() == 0) {
 						p2.push(t2.getExecTime() + t2.getReadyTime());
+						executed.add(t2);
 					} else {
 						if (p1.peek() > p2.peek()) {
 							p2.push(p2.peek() + t2.getExecTime());
+							executed.add(t2);
 						} else {
 							p1.push(p1.peek() + t2.getExecTime());
+							executed.add(t2);
 						}
 
 					}
@@ -260,14 +270,19 @@ public class Schedule {
 
 					if (p1.peek() == 0) {
 						p1.push(t3.getExecTime() + t3.getReadyTime());
+						executed.add(t3);
 					} else if (p2.peek() == 0) {
 						p2.push(t3.getExecTime() + t3.getReadyTime());
+						executed.add(t3);
 
 					} else {
 						if (p1.peek() > p2.peek()) {
-							p2.push(p2.peek() + t3.getExecTime()); //no need to add ready time since we already know p1/p2 isn't empty
+							p2.push(p2.peek() + t3.getExecTime()); // no need to add ready time since we already know
+																	// p1/p2 isn't empty
+							executed.add(t3);
 						} else {
 							p1.push(p1.peek() + t3.getExecTime());
+							executed.add(t3);
 						}
 
 					}
@@ -281,8 +296,25 @@ public class Schedule {
 					System.out.println("Processor 2: " + p2.peek());
 					System.out.println("\n");
 				}
-
+				
+				if(executed.size() > 1){
+					
+					List<String> temp = new ArrayList<String>();
+					int i =0; 
+					int r = i+1;
+					
+					for(i =0; i < executed.size(); i++) {
+						if(executed.get(i).getName().equals("T" + r)) {
+							
+							System.out.println("T" +r);
+						}			
+					}
+					
+				}
+				
 				s++;
+				
+				
 
 			} catch (Exception e) {
 				completed = true;
@@ -304,28 +336,6 @@ public class Schedule {
 		return result;
 	}
 
-	/**
-	 * 
-	 * 
-	 * I think for the processes we need to figure out what libraries allow for two
-	 * processors to run, or we might not need need to worry about it.
-	 * 
-	 * I did some research and multi-*processing* is apparently going to provide
-	 * worse performance:
-	 * https://stackoverflow.com/questions/8001966/how-to-do-multiprocessing-in-java-and-what-speed-gains-to-expect
-	 * 
-	 * The link basically says we'd be running two JVMs and that would use up a lot
-	 * of our CPU...
-	 * 
-	 * So I think in our case mutli-threading would probably be the way to go? I'm
-	 * curious to know if we actually "need" multiprocessing-related libraries or if
-	 * we can get away with multi-threading.
-	 *
-	 * Once we figure out the whole "process" agenda, we can essentially store each
-	 * task in a queue, and assign it a resource for its execution time.
-	 * 
-	 * 
-	 * 
-	 */
+
 
 }
