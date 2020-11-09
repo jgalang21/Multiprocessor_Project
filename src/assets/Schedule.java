@@ -297,18 +297,76 @@ public class Schedule {
 					System.out.println("\n");
 				}
 				
-				if(executed.size() > 1){
-					
-					List<String> temp = new ArrayList<String>();
-					int i =0; 
-					int r = i+1;
-					
-					for(i =0; i < executed.size(); i++) {
-						if(executed.get(i).getName().equals("T" + r)) {
-							
-							System.out.println("T" +r);
-						}			
+				if(executed.size() == 3){ //this will 100% probably need to be changed.
+					System.out.println("Remaing tasks that haven't been chosen (for backtracking)");
+					Stack<Task> n = new Stack<Task>();
+					for(Task t : tasks) { //sort through the current task list and see which ones haven't been executed.				
+						if(!executed.contains(t)) {
+							n.push(t);
+							System.out.println(t.getName());
+						}
 					}
+					t1 = n.pop();
+					t2 = n.pop();
+					
+		
+					h1 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0); //t5
+					h2 = t1.calc_heuristic(t1.getReadyTime(), t1.getReadyTime(), p2.peek()); //t3
+					 h = Math.min(h1, h2);
+					
+					if (h == h1) {
+						if (p1.peek() == 0) {
+							p1.push(t1.getExecTime() + t1.getReadyTime());
+							executed.add(t1);
+
+						} else if (p2.peek() == 0) {
+							p2.push(t1.getExecTime() + t1.getReadyTime());
+							executed.add(t1);
+						}
+
+						else {
+							if (p1.peek() > p2.peek()) {
+								p2.push(p2.peek() + t1.getExecTime()); // no need to add ready time since we already know
+																		// p1/p2 isn't empty
+								executed.add(t1);
+							} else {
+								p1.push(p1.peek() + t1.getExecTime());
+								executed.add(t1);
+							}
+						}
+					}
+
+					else if (h == h2) {
+						if (p1.peek() == 0) {
+							p1.push(t2.getExecTime() + t2.getReadyTime());
+							executed.add(t2);
+						}
+
+						else if (p2.peek() == 0) {
+							p2.push(t2.getExecTime() + t2.getReadyTime());
+							executed.add(t2);
+						} else {
+							if (p1.peek() > p2.peek()) {
+								p2.push(p2.peek() + t2.getExecTime());
+								executed.add(t2);
+							} else {
+								p1.push(p1.peek() + t2.getExecTime());
+								executed.add(t2);
+							}
+
+						}
+					}
+					
+					if (!p1.isEmpty()) {
+						System.out.println("Processor 1: " + p1.peek());
+					}
+					if (!p2.isEmpty()) {
+						System.out.println("Processor 2: " + p2.peek());
+						System.out.println("\n");
+					}
+					
+					
+					
 					
 				}
 				
