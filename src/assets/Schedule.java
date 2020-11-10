@@ -61,19 +61,19 @@ public class Schedule {
 				if (p1_usage == 0 && p2_usage == 1) { 
 					if (t1.getUsage().equals("N")) {
 						h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
-						System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						System.out.println("[t1 EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 					}
 
 					if (t2.getUsage().equals("S")) {
 						h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
 
 						// call the "lock() or unlock()" method here
-						System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 					}
 
 					if (t3.getUsage().equals("E")) {
 						h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
-						System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+						System.out.println("[t3 EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 					}
 
 					p1_usage = 1;
@@ -84,9 +84,9 @@ public class Schedule {
 					h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
 					h3 = t3.calc_heuristic(t3.getReadyTime(), p2.peek(), 0);
 
-					System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
-					System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
-					System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+					System.out.println("[t1 EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+					System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+					System.out.println("[t3 EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					// p1_usage = 0;
 					p2_usage = 1;
 
@@ -99,103 +99,103 @@ public class Schedule {
 					if (p1.peek() > p2.peek()) {
 						if (t1.getUsage().equals("N")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
-							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+							System.out.println("[t1 EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 							
 						}
 
 						if (t2.getUsage().equals("N")) {
 							h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
-							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+							System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 
 						}
 						if (t3.getUsage().equals("N")) {
 							h3 = t3.calc_heuristic(t3.getReadyTime(), p2.peek(), 0);
-							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+							System.out.println("[t3 EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 
 						}
 
 						if (t1.getUsage().equals("S")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
-							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+							System.out.println("[t1 EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 						}
 
 						if (t2.getUsage().equals("S")) {
 							h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
-							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+							System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 
 						}
 						if (t3.getUsage().equals("S")) {
 							h3 = t3.calc_heuristic(t3.getReadyTime(), p2.peek(), 0);
-							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
+							System.out.println("[t3 EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 
 						}
 
 						if (t1.getUsage().equals("E")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), p2.peek());
 							System.out.println(
-									"[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
+									"[t1 EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 						}
 
 						if (t2.getUsage().equals("E")) {
-							h2 = t2.calc_heuristic(t1.getReadyTime(), p1.peek(), p2.peek());
+							h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), p2.peek());
 							System.out.println(
-									"[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
+									"[t2 EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 						}
 						if (t3.getUsage().equals("E")) {
 							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), p2.peek());
 							System.out.println(
-									"[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
+									"[t3 EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 						}
 
 					}
 					if (p2.peek() > p1.peek()) {
 						if (t1.getUsage().equals("N")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+							System.out.println("[t1 EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 						}
 
 						if (t2.getUsage().equals("N")) {
 							h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+							System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 
 						}
 						if (t3.getUsage().equals("N")) {
 							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+							System.out.println("[t3 EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 
 						}
 
 						if (t1.getUsage().equals("S")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+							System.out.println("[t1 EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 						}
 
 						if (t2.getUsage().equals("S")) {
 							h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+							System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 
 						}
 						if (t3.getUsage().equals("S")) {
 							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
-							System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
+							System.out.println("[t3 EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 
 						}
 
 						if (t1.getUsage().equals("E")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), p2.peek());
 							System.out.println(
-									"[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
+									"[t1 EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 						}
 
 						if (t2.getUsage().equals("E")) {
 							h2 = t2.calc_heuristic(t1.getReadyTime(), p1.peek(), p2.peek());
 							System.out.println(
-									"[EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
+									"[t2 EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 						}
 						if (t3.getUsage().equals("E")) {
 							h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), p2.peek());
 							System.out.println(
-									"[EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
+									"[t3 EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 						}
 
 					}
