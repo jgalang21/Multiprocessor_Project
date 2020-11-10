@@ -404,13 +404,14 @@ public class Schedule {
 							System.out.println(t.getName());
 						}
 					}
+							
 					
 					if(p1.peek() < p2.peek()) {
 						p1.push(p1.peek() + n.pop().getExecTime());
 					
 					}
-					else if(p2.peek() > p1.peek()) {
-						p1.push(p1.peek() + n.pop().getExecTime());
+					else if(p2.peek() < p1.peek()) {
+						p2.push(p2.peek() + n.pop().getExecTime());
 					}
 					
 					System.out.println("Processor 1: " + p1.peek());

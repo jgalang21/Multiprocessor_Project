@@ -15,6 +15,9 @@ import assets.Task;
 public class Main { //check
 	public static void main(String args[]) {
 		
+		
+		long startTime = System.currentTimeMillis();
+		 
 		int winSize = 3; //window size
 		
 		Task x = new Task("T1", 0, 6, 10, "N");
@@ -61,6 +64,11 @@ public class Main { //check
 		Schedule schedule = new Schedule(list, winSize);
 		schedule.execute();
 		
+		 long endTime = System.currentTimeMillis();
+		 
+	     long timeElapsed = endTime - startTime;
+	     System.out.println("Execution time in seconds: " + timeElapsed/1000.0);
+
 		
 		
 		
