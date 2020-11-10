@@ -297,7 +297,10 @@ public class Schedule {
 					System.out.println("\n");
 				}
 				
-				if(executed.size() == 3){ //this will 100% probably need to be changed.
+				
+				//backtracking logic here
+				
+				if(executed.size() == 3){ //this if statement will 100% probably need to be changed.
 					System.out.println("Remaing tasks that haven't been chosen (for backtracking)");
 					Stack<Task> n = new Stack<Task>();
 					for(Task t : tasks) { //sort through the current task list and see which ones haven't been executed.				
@@ -308,11 +311,10 @@ public class Schedule {
 					}
 					t1 = n.pop();
 					t2 = n.pop();
-					
 		
 					h1 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0); //t5
 					h2 = t1.calc_heuristic(t1.getReadyTime(), t1.getReadyTime(), p2.peek()); //t3
-					 h = Math.min(h1, h2);
+					h = Math.min(h1, h2);
 					
 					if (h == h1) {
 						if (p1.peek() == 0) {
@@ -365,10 +367,30 @@ public class Schedule {
 						System.out.println("\n");
 					}
 					
+					for(Task t : tasks) { 				
+						if(!executed.contains(t)) {
+							n.push(t);
+							System.out.println(t.getName());
+						}
+					}
 					
+					if(p1.peek() < p2.peek()) {
+						p1.push(p1.peek() + n.pop().getExecTime());
+					
+					}
+					else if(p2.peek() > p1.peek()) {
+						p1.push(p1.peek() + n.pop().getExecTime());
+					}
+					
+					System.out.println("Processor 1: " + p1.peek());
+					System.out.println("Processor 2: " + p2.peek());
+					
+					System.out.println("No more tasks remaining. Set is feasible");
 					
 					
 				}
+				
+				//backtracking logic ends here
 				
 				s++;
 				
