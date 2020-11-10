@@ -225,9 +225,13 @@ public class Schedule {
 				int h = Math.min(h1, Math.min(h2, h3));
 				
 				for (int i = 0; i < store.size(); i++) {
-					System.out.println("t" + i + " deadline: " + store.get(i).getDeadline() +
-							" +" + " EST: " + EST_store.get(i) + " = " + (store.get(i).getDeadline()+EST_store.get(i)));
+					System.out.println("t" + i + " Feasibility: " + store.get(i).getExecTime() +
+							" +" + " EST: " + EST_store.get(i) + " = " + (store.get(i).getExecTime()+EST_store.get(i)));
+					System.out.println("Feasible?: " + feasibility_check(EST_store.get(i), store.get(i).getExecTime(), 
+							store.get(i).getDeadline()));
 				}
+				
+				
 				
 				System.out.println("Smallest Heuristic Value:" + h);
 				System.out.println("\n");
@@ -426,7 +430,7 @@ public class Schedule {
 		return result;
 	}
 
-	public static boolean feasility_check(int EST, int comp, int dead) {
+	public static boolean feasibility_check(int EST, int comp, int dead) {
 		boolean result = false;
 		
 		if (EST + comp > dead) {
