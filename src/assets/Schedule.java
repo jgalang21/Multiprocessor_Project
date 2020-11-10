@@ -25,11 +25,6 @@ public class Schedule {
 
 		boolean completed = false;
 
-		// i don't know how your resource class you made works, but i initialized them
-		// here
-		Resource r1 = new Resource("R1", 0);
-		Resource r2 = new Resource("R2", 0);
-
 		int p1_usage = 0;
 		int p2_usage = 1;
 
@@ -63,8 +58,7 @@ public class Schedule {
 
 				// Need Flexibility between p1.peek() and p2.peek()
 				// calc heuristic = deadline + EST
-				if (p1_usage == 0 && p2_usage == 1) { // could replace these statements with the r1 and r2 i created
-														// above
+				if (p1_usage == 0 && p2_usage == 1) { 
 					if (t1.getUsage().equals("N")) {
 						h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
 						System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
@@ -90,8 +84,6 @@ public class Schedule {
 					h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
 					h3 = t3.calc_heuristic(t3.getReadyTime(), p2.peek(), 0);
 
-					// Need Flexibility between p1.peek() and p2.peek()
-
 					System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					System.out.println("[EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 					System.out.println("[EST = max(" + t3.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
@@ -108,7 +100,6 @@ public class Schedule {
 						if (t1.getUsage().equals("N")) {
 							h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), 0);
 							System.out.println("[EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
-						
 							
 						}
 
@@ -300,13 +291,13 @@ public class Schedule {
 				
 				//backtracking logic here
 				
-				if(executed.size() == 3){ //this if statement will 100% probably need to be changed.
+				if(executed.size() == tasks.size()-2){ //this if statement will 100% probably need to be changed.
 					System.out.println("Remaing tasks that haven't been chosen (for backtracking)");
 					Stack<Task> n = new Stack<Task>();
 					for(Task t : tasks) { //sort through the current task list and see which ones haven't been executed.				
 						if(!executed.contains(t)) {
 							n.push(t);
-							System.out.println(t.getName());
+							
 						}
 					}
 					t1 = n.pop();
@@ -386,6 +377,7 @@ public class Schedule {
 					System.out.println("Processor 2: " + p2.peek());
 					
 					System.out.println("No more tasks remaining. Set is feasible");
+					completed=true;
 					
 					
 				}
@@ -397,6 +389,7 @@ public class Schedule {
 				
 
 			} catch (Exception e) {
+				System.out.println("Task schedule not feasible");
 				completed = true;
 
 			}
