@@ -311,6 +311,8 @@ public class Schedule {
 				
 				
 				//backtracking logic here
+				System.out.println("Executed size: " + executed.size());
+				System.out.println("tasks size: " + tasks.size());
 				
 				if(executed.size() == tasks.size()-2){ //this if statement will 100% probably need to be changed.
 					System.out.println("Remaing tasks that haven't been chosen (for backtracking)");
@@ -323,28 +325,41 @@ public class Schedule {
 					}
 					t1 = n.pop();
 					t2 = n.pop();
-		
+					
+					System.out.println("p1 peek before backtrack: " + p1.peek());
+					System.out.println("p2 peek before backtrack: " + p2.peek());
+					
 					h1 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0); //t5
 					h2 = t1.calc_heuristic(t1.getReadyTime(), t1.getReadyTime(), p2.peek()); //t3
 					h = Math.min(h1, h2);
 					
+					System.out.println("t5 EST in back: " + h1 );
+					System.out.println("t3 EST in back: " + h2 );
+					
+					System.out.println("t5 Comp: " + t1.getExecTime());
+					System.out.println("t3 Comp: " + t2.getExecTime());
+					
 					if (h == h1) {
 						if (p1.peek() == 0) {
+							System.out.println("p1.peek == 0");
 							p1.push(t1.getExecTime() + t1.getReadyTime());
 							executed.add(t1);
 
 						} else if (p2.peek() == 0) {
+							System.out.println("p2.peek == 0");
 							p2.push(t1.getExecTime() + t1.getReadyTime());
 							executed.add(t1);
 						}
 
 						else {
 							if (p1.peek() > p2.peek()) {
-								p2.push(p2.peek() + t1.getExecTime()); // no need to add ready time since we already know
+								System.out.println("p1.peek > p2.peek this?");
+								p2.push(p2.peek() + t2.getExecTime()); // no need to add ready time since we already know
 																		// p1/p2 isn't empty
 								executed.add(t1);
 							} else {
-								p1.push(p1.peek() + t1.getExecTime());
+								System.out.println("p2.peek > p1.peek");
+								p1.push(p1.peek() + t2.getExecTime());
 								executed.add(t1);
 							}
 						}
@@ -352,18 +367,22 @@ public class Schedule {
 
 					else if (h == h2) {
 						if (p1.peek() == 0) {
+							System.out.println("p1.peek == 0");
 							p1.push(t2.getExecTime() + t2.getReadyTime());
 							executed.add(t2);
 						}
 
 						else if (p2.peek() == 0) {
+							System.out.println("p2.peek == 0");
 							p2.push(t2.getExecTime() + t2.getReadyTime());
 							executed.add(t2);
 						} else {
 							if (p1.peek() > p2.peek()) {
+								System.out.println("p1.peek > p2.peek");
 								p2.push(p2.peek() + t2.getExecTime());
 								executed.add(t2);
 							} else {
+								System.out.println("p1.peek < p2.peek");
 								p1.push(p1.peek() + t2.getExecTime());
 								executed.add(t2);
 							}
