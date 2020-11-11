@@ -225,7 +225,7 @@ public class Schedule {
 				int h = Math.min(h1, Math.min(h2, h3));
 				
 				for (int i = 0; i < store.size(); i++) {
-					System.out.println("t" + i + " Feasibility: " + store.get(i).getExecTime() +
+					System.out.println(store.get(i).getDeadline() + " Feasibility: " + store.get(i).getExecTime() +
 							" +" + " EST: " + EST_store.get(i) + " = " + (store.get(i).getExecTime()+EST_store.get(i)));
 					System.out.println("Feasible?: " + feasibility_check(EST_store.get(i), store.get(i).getExecTime(), 
 							store.get(i).getDeadline()));
