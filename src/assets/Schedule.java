@@ -40,10 +40,21 @@ public class Schedule {
 				// the window we're looking at
 				// s: "0 1 2" 3 4
 				// Task 1 2 3 selected
-
-				Task t1 = tasks.get(s);
-				Task t2 = tasks.get(s + 1);
-				Task t3 = tasks.get(s + 2);
+				Task t1 = new Task("N", 0, 0, 0, "N");
+				Task t2 = new Task("N", 0, 0, 0, "N");
+				Task t3 = new Task("N", 0, 0, 0, "N");
+				
+				
+				if (s < tasks.size()-2) {
+					t1 = tasks.get(s);
+					t2 = tasks.get(s + 1);
+					t3 = tasks.get(s + 2);
+				} else if (s == tasks.size()-1) {
+					t1 = tasks.get(s);
+					t2 = tasks.get(s + 1);
+				} else {
+					t1 = tasks.get(s);
+				}
 
 				int num_task = 3;
 
@@ -431,7 +442,7 @@ public class Schedule {
 							System.out.println("p1 peek: " + p1.peek()); //49
 							System.out.println("p2 peek: " + p2.peek()); //67
 							EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
-							boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
+							feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
 							
 							if (feasible == false) {
 								System.out.println("This is not feasible");
@@ -456,7 +467,7 @@ public class Schedule {
 						else if(p1_usage == 1 && p2_usage == 0) {
 							System.out.println("For last task");
 							EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
-							boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
+							feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
 							
 							if (feasible == false) {
 								System.out.println("This is not feasible");
