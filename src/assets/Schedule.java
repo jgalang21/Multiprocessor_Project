@@ -15,6 +15,7 @@ public class Schedule {
 	private static Stack<Integer> p1 = new Stack<Integer>();
 	private static Stack<Integer> p2 = new Stack<Integer>();
 	private static List<Task> executed = new ArrayList<Task>();
+	public static boolean feasible;
 
 	public Schedule(List<Task> tasks, int winSize) {
 		this.tasks = tasks;
@@ -315,7 +316,7 @@ public class Schedule {
 				System.out.println("tasks size: " + tasks.size());
 				boolean backtrack = false;
 				
-				while (backtrack == false) {
+				if (backtrack == false) {
 					if(executed.size() == tasks.size()-2){ //this if statement will 100% probably need to be changed.
 						System.out.println("Remaing tasks that haven't been chosen (for backtracking)");
 						Stack<Task> n = new Stack<Task>();
@@ -354,9 +355,9 @@ public class Schedule {
 							}
 	
 							else {
-								if (p1.peek() > p2.peek()) {
+								if (p1_usage == 1 && p2_usage == 0) {
 									System.out.println("p1.peek > p2.peek this?");
-									boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
+									feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
 									
 									if (feasible == false) {
 										System.out.println("This is not feasible");
@@ -366,11 +367,16 @@ public class Schedule {
 									p2.push(p2.peek() + t2.getExecTime()); // no need to add ready time since we already know
 																			// p1/p2 isn't empty
 									executed.add(t1);
+									p1_usage = 0;
+									p2_usage = 1;
 								} else {
 									System.out.println("p2.peek > p1.peek");
 									System.out.println("this last?");
 									p1.push(p1.peek() + t2.getExecTime());
 									executed.add(t1);
+									
+									p1_usage = 1;
+									p2_usage = 0;
 								}
 							}
 						}
@@ -387,16 +393,20 @@ public class Schedule {
 								p2.push(t2.getExecTime() + t2.getReadyTime());
 								executed.add(t2);
 							} else {
-								if (p1.peek() > p2.peek()) {
+								if (p1_usage == 1 && p2_usage == 0) {
 									System.out.println("p1.peek > p2.peek");
 									System.out.println("this last?");
 									p2.push(p2.peek() + t2.getExecTime());
 									executed.add(t2);
+									p1_usage = 0;
+									p2_usage = 1;
 								} else {
 									System.out.println("p1.peek < p2.peek");
 									System.out.println("this 2 last?");
 									p1.push(p1.peek() + t2.getExecTime());
 									executed.add(t2);
+									p1_usage = 1;
+									p2_usage = 0;
 								}
 	
 							}
@@ -417,7 +427,7 @@ public class Schedule {
 							}
 						}
 						
-						if(p1.peek() < p2.peek()) {
+						if(p1_usage == 0 && p2_usage == 1) {
 							System.out.println("p1 peek: " + p1.peek()); //49
 							System.out.println("p2 peek: " + p2.peek()); //67
 							EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
@@ -425,19 +435,25 @@ public class Schedule {
 							
 							if (feasible == false) {
 								System.out.println("This is not feasible");
+								backtrack = true;
+								
 							} else {
 								System.out.println("This is feasible");
+								p1.push(p1.peek() + n.pop().getExecTime());
+								System.out.println("T2 ready: " + t2.getReadyTime());
+								System.out.println("p1 peek: " + p1.peek()); //49
+								System.out.println("p2 peek: " + p2.peek()); //67
+								System.out.println("This is last? 3 : " + t2.getName());
+								System.out.println(EST_store.get(EST_store.size()-1));
 							}
-							p1.push(p1.peek() + n.pop().getExecTime());
-							System.out.println("T2 ready: " + t2.getReadyTime());
-							System.out.println("p1 peek: " + p1.peek()); //49
-							System.out.println("p2 peek: " + p2.peek()); //67
 							
-							System.out.println("This is last? 3 : " + t2.getName());
-							System.out.println(EST_store.get(EST_store.size()-1));
+
 							
+							
+							p1_usage = 1;
+							p2_usage = 0;
 						}
-						else if(p2.peek() > p1.peek()) {
+						else if(p1_usage == 1 && p2_usage == 0) {
 							System.out.println("For last task");
 							EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
 							boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
@@ -449,14 +465,26 @@ public class Schedule {
 							}
 							p1.push(p1.peek() + n.pop().getExecTime());
 							System.out.println("This is last? 5 : " + t2.getName());
+							p1_usage = 0;
+							p2_usage = 1;
 						}
 						
 						System.out.println("Processor 1: " + p1.peek());
 						System.out.println("Processor 2: " + p2.peek());
 						
+						while (!p1.empty()) {
+							System.out.println(p1.pop());
+						}
+						while (!p2.empty()) {
+							System.out.println(p2.pop());
+						}
 						System.out.println("No more tasks remaining. Set is feasible");
-						completed=true;
 						
+						if (feasible == false) {
+							completed = false;
+						} else {
+							completed=true;
+						}
 						
 					}
 				}
