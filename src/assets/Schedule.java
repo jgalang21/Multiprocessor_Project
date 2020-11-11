@@ -32,7 +32,7 @@ public class Schedule {
 
 		p1.push(0);
 		p2.push(0);
-
+		
 		while (completed == false) {
 			
 			try {
@@ -313,151 +313,153 @@ public class Schedule {
 				//backtracking logic here
 				System.out.println("Executed size: " + executed.size());
 				System.out.println("tasks size: " + tasks.size());
+				boolean backtrack = false;
 				
-				if(executed.size() == tasks.size()-2){ //this if statement will 100% probably need to be changed.
-					System.out.println("Remaing tasks that haven't been chosen (for backtracking)");
-					Stack<Task> n = new Stack<Task>();
-					for(Task t : tasks) { //sort through the current task list and see which ones haven't been executed.				
-						if(!executed.contains(t)) {
-							n.push(t);
+				while (backtrack == false) {
+					if(executed.size() == tasks.size()-2){ //this if statement will 100% probably need to be changed.
+						System.out.println("Remaing tasks that haven't been chosen (for backtracking)");
+						Stack<Task> n = new Stack<Task>();
+						for(Task t : tasks) { //sort through the current task list and see which ones haven't been executed.				
+							if(!executed.contains(t)) {
+								n.push(t);
+								
+							}
+						}
+						t1 = n.pop();
+						t2 = n.pop();
+						
+						System.out.println("p1 peek before backtrack: " + p1.peek());
+						System.out.println("p2 peek before backtrack: " + p2.peek());
+						
+						h1 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0); //t5
+						h2 = t1.calc_heuristic(t1.getReadyTime(), t1.getReadyTime(), p2.peek()); //t3
+						h = Math.min(h1, h2);
+						
+						System.out.println("t5 EST in back: " + h1 );
+						System.out.println("t3 EST in back: " + h2 );
+						
+						System.out.println("t5 Comp: " + t1.getExecTime());
+						System.out.println("t3 Comp: " + t2.getExecTime());
+						
+						if (h == h1) {
+							if (p1.peek() == 0) {
+								System.out.println("p1.peek == 0");
+								p1.push(t1.getExecTime() + t1.getReadyTime());
+								executed.add(t1);
+	
+							} else if (p2.peek() == 0) {
+								System.out.println("p2.peek == 0");
+								p2.push(t1.getExecTime() + t1.getReadyTime());
+								executed.add(t1);
+							}
+	
+							else {
+								if (p1.peek() > p2.peek()) {
+									System.out.println("p1.peek > p2.peek this?");
+									boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
+									
+									if (feasible == false) {
+										System.out.println("This is not feasible");
+									} else {
+										System.out.println("This is feasible");
+									}
+									p2.push(p2.peek() + t2.getExecTime()); // no need to add ready time since we already know
+																			// p1/p2 isn't empty
+									executed.add(t1);
+								} else {
+									System.out.println("p2.peek > p1.peek");
+									System.out.println("this last?");
+									p1.push(p1.peek() + t2.getExecTime());
+									executed.add(t1);
+								}
+							}
+						}
+	
+						else if (h == h2) {
+							if (p1.peek() == 0) {
+								System.out.println("p1.peek == 0");
+								p1.push(t2.getExecTime() + t2.getReadyTime());
+								executed.add(t2);
+							}
+	
+							else if (p2.peek() == 0) {
+								System.out.println("p2.peek == 0");
+								p2.push(t2.getExecTime() + t2.getReadyTime());
+								executed.add(t2);
+							} else {
+								if (p1.peek() > p2.peek()) {
+									System.out.println("p1.peek > p2.peek");
+									System.out.println("this last?");
+									p2.push(p2.peek() + t2.getExecTime());
+									executed.add(t2);
+								} else {
+									System.out.println("p1.peek < p2.peek");
+									System.out.println("this 2 last?");
+									p1.push(p1.peek() + t2.getExecTime());
+									executed.add(t2);
+								}
+	
+							}
+						}
+						
+						if (!p1.isEmpty()) {
+							System.out.println("Processor 1: " + p1.peek());
+						}
+						if (!p2.isEmpty()) {
+							System.out.println("Processor 2: " + p2.peek());
+							System.out.println("\n");
+						}
+						
+						for(Task t : tasks) { 				
+							if(!executed.contains(t)) {
+								n.push(t);
+								System.out.println(t.getName());
+							}
+						}
+						
+						if(p1.peek() < p2.peek()) {
+							System.out.println("p1 peek: " + p1.peek()); //49
+							System.out.println("p2 peek: " + p2.peek()); //67
+							EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
+							boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
+							
+							if (feasible == false) {
+								System.out.println("This is not feasible");
+							} else {
+								System.out.println("This is feasible");
+							}
+							p1.push(p1.peek() + n.pop().getExecTime());
+							System.out.println("T2 ready: " + t2.getReadyTime());
+							System.out.println("p1 peek: " + p1.peek()); //49
+							System.out.println("p2 peek: " + p2.peek()); //67
+							
+							System.out.println("This is last? 3 : " + t2.getName());
+							System.out.println(EST_store.get(EST_store.size()-1));
 							
 						}
-					}
-					t1 = n.pop();
-					t2 = n.pop();
-					
-					System.out.println("p1 peek before backtrack: " + p1.peek());
-					System.out.println("p2 peek before backtrack: " + p2.peek());
-					
-					h1 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0); //t5
-					h2 = t1.calc_heuristic(t1.getReadyTime(), t1.getReadyTime(), p2.peek()); //t3
-					h = Math.min(h1, h2);
-					
-					System.out.println("t5 EST in back: " + h1 );
-					System.out.println("t3 EST in back: " + h2 );
-					
-					System.out.println("t5 Comp: " + t1.getExecTime());
-					System.out.println("t3 Comp: " + t2.getExecTime());
-					
-					if (h == h1) {
-						if (p1.peek() == 0) {
-							System.out.println("p1.peek == 0");
-							p1.push(t1.getExecTime() + t1.getReadyTime());
-							executed.add(t1);
-
-						} else if (p2.peek() == 0) {
-							System.out.println("p2.peek == 0");
-							p2.push(t1.getExecTime() + t1.getReadyTime());
-							executed.add(t1);
-						}
-
-						else {
-							if (p1.peek() > p2.peek()) {
-								System.out.println("p1.peek > p2.peek this?");
-								boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
-								
-								if (feasible == false) {
-									System.out.println("This is not feasible");
-								} else {
-									System.out.println("This is feasible");
-								}
-								p2.push(p2.peek() + t2.getExecTime()); // no need to add ready time since we already know
-																		// p1/p2 isn't empty
-								executed.add(t1);
+						else if(p2.peek() > p1.peek()) {
+							System.out.println("For last task");
+							EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
+							boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
+							
+							if (feasible == false) {
+								System.out.println("This is not feasible");
 							} else {
-								System.out.println("p2.peek > p1.peek");
-								System.out.println("this last?");
-								p1.push(p1.peek() + t2.getExecTime());
-								executed.add(t1);
+								System.out.println("This is feasible");
 							}
+							p1.push(p1.peek() + n.pop().getExecTime());
+							System.out.println("This is last? 5 : " + t2.getName());
 						}
-					}
-
-					else if (h == h2) {
-						if (p1.peek() == 0) {
-							System.out.println("p1.peek == 0");
-							p1.push(t2.getExecTime() + t2.getReadyTime());
-							executed.add(t2);
-						}
-
-						else if (p2.peek() == 0) {
-							System.out.println("p2.peek == 0");
-							p2.push(t2.getExecTime() + t2.getReadyTime());
-							executed.add(t2);
-						} else {
-							if (p1.peek() > p2.peek()) {
-								System.out.println("p1.peek > p2.peek");
-								System.out.println("this last?");
-								p2.push(p2.peek() + t2.getExecTime());
-								executed.add(t2);
-							} else {
-								System.out.println("p1.peek < p2.peek");
-								System.out.println("this 2 last?");
-								p1.push(p1.peek() + t2.getExecTime());
-								executed.add(t2);
-							}
-
-						}
-					}
-					
-					if (!p1.isEmpty()) {
+						
 						System.out.println("Processor 1: " + p1.peek());
-					}
-					if (!p2.isEmpty()) {
 						System.out.println("Processor 2: " + p2.peek());
-						System.out.println("\n");
-					}
-					
-					for(Task t : tasks) { 				
-						if(!executed.contains(t)) {
-							n.push(t);
-							System.out.println(t.getName());
-						}
-					}
-					
-					if(p1.peek() < p2.peek()) {
-						System.out.println("p1 peek: " + p1.peek()); //49
-						System.out.println("p2 peek: " + p2.peek()); //67
-						EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
-						boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
 						
-						if (feasible == false) {
-							System.out.println("This is not feasible");
-						} else {
-							System.out.println("This is feasible");
-						}
-						p1.push(p1.peek() + n.pop().getExecTime());
-						System.out.println("T2 ready: " + t2.getReadyTime());
-						System.out.println("p1 peek: " + p1.peek()); //49
-						System.out.println("p2 peek: " + p2.peek()); //67
+						System.out.println("No more tasks remaining. Set is feasible");
+						completed=true;
 						
-						System.out.println("This is last? 3 : " + t2.getName());
-						System.out.println(EST_store.get(EST_store.size()-1));
 						
 					}
-					else if(p2.peek() > p1.peek()) {
-						System.out.println("For last task");
-						EST_store.add(highest_From_Three(t2.getReadyTime(),p1.peek(),p2.peek()));
-						boolean feasible = feasibility_check(EST_store.get(EST_store.size()-1),t2.getExecTime(),t2.getDeadline());
-						
-						if (feasible == false) {
-							System.out.println("This is not feasible");
-						} else {
-							System.out.println("This is feasible");
-						}
-						p1.push(p1.peek() + n.pop().getExecTime());
-						System.out.println("This is last? 5 : " + t2.getName());
-					}
-					
-					System.out.println("Processor 1: " + p1.peek());
-					System.out.println("Processor 2: " + p2.peek());
-					
-					System.out.println("No more tasks remaining. Set is feasible");
-					completed=true;
-					
-					
 				}
-				
 				//backtracking logic ends here
 				
 				s++;
