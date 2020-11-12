@@ -107,6 +107,7 @@ public class Schedule {
 						h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), 0);
 						store.add(t1);
 						EST_store.add(highest_From_Three(t1.getReadyTime(), p1.peek(), 0));
+						
 						System.out.println("[t1 EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 					}
 
@@ -114,6 +115,7 @@ public class Schedule {
 						h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), 0);
 						store.add(t2);
 						EST_store.add(highest_From_Three(t2.getReadyTime(), p1.peek(), 0));
+						
 						System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 
 					}
@@ -121,6 +123,7 @@ public class Schedule {
 						h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), 0);
 						store.add(t3);
 						EST_store.add(highest_From_Three(t3.getReadyTime(), p1.peek(), 0));
+						
 						System.out.println("[t3 EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + 0 + ")]");
 
 					}
@@ -129,6 +132,7 @@ public class Schedule {
 						h1 = t1.calc_heuristic(t1.getReadyTime(), p1.peek(), p2.peek());
 						store.add(t1);
 						EST_store.add(highest_From_Three(t1.getReadyTime(), p1.peek(), p2.peek()));
+						
 						System.out.println(
 								"[t1 EST = max(" + t1.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 					}
@@ -137,6 +141,7 @@ public class Schedule {
 						h2 = t2.calc_heuristic(t2.getReadyTime(), p1.peek(), p2.peek());
 						store.add(t2);
 						EST_store.add(highest_From_Three(t2.getReadyTime(), p1.peek(), p2.peek()));
+						
 						System.out.println(
 								"[t2 EST = max(" + t2.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 					}
@@ -144,6 +149,7 @@ public class Schedule {
 						h3 = t3.calc_heuristic(t3.getReadyTime(), p1.peek(), p2.peek());
 						store.add(t3);
 						EST_store.add(highest_From_Three(t3.getReadyTime(), p1.peek(), p2.peek()));
+						
 						System.out.println(
 								"[t3 EST = max(" + t3.getReadyTime() + ", " + p1.peek() + ", " + p2.peek() + ")]");
 					}
@@ -186,6 +192,7 @@ public class Schedule {
 						h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
 						store.add(t2);
 						EST_store.add(highest_From_Three(t2.getReadyTime(), p2.peek(), 0));
+						
 						System.out.println("[t2 EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + 0 + ")]");
 
 					}
@@ -201,6 +208,7 @@ public class Schedule {
 						h1 = t1.calc_heuristic(t1.getReadyTime(), p2.peek(), p2.peek());
 						store.add(t1);
 						EST_store.add(highest_From_Three(t1.getReadyTime(), p2.peek(), p2.peek()));
+						System.out.println("This?");
 						System.out.println(
 								"[t1 EST = max(" + t1.getReadyTime() + ", " + p2.peek() + ", " + p2.peek() + ")]");
 					}
@@ -209,6 +217,7 @@ public class Schedule {
 						h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), p2.peek());
 						store.add(t2);
 						EST_store.add(highest_From_Three(t2.getReadyTime(), p2.peek(), p2.peek()));
+						
 						System.out.println(
 								"[t2 EST = max(" + t2.getReadyTime() + ", " + p2.peek() + ", " + p2.peek() + ")]");
 					}
@@ -243,14 +252,30 @@ public class Schedule {
 
 				int h = Math.min(h1, Math.min(h2, h3));
 				
+				Boolean[] feasible_arr = new Boolean[store.size()];
+				
 				for (int i = 0; i < store.size(); i++) {
 					System.out.println(store.get(i).getDeadline() + " Feasibility: " + store.get(i).getExecTime() +
 							" +" + " EST: " + EST_store.get(i) + " = " + (store.get(i).getExecTime()+EST_store.get(i)));
 					System.out.println("Feasible?: " + feasibility_check(EST_store.get(i), store.get(i).getExecTime(), 
 							store.get(i).getDeadline()));
+					feasible_arr[i] = feasibility_check(EST_store.get(i), store.get(i).getExecTime(), 
+							store.get(i).getDeadline());
 				}
 				
-				
+				for (int i = 0; i < feasible_arr.length; i++) {
+					System.out.println(feasible_arr[i]);
+					if (feasible_arr[i] == false) {
+						if (p1_usage == 1 && p2_usage == 0) {
+							p1_usage = 0;
+							p2_usage = 1;
+						} else {
+							p1_usage = 1;
+							p2_usage = 0;
+						}
+							
+					}
+				}
 				
 				System.out.println("Smallest Heuristic Value:" + h);
 				System.out.println("\n");
@@ -466,6 +491,7 @@ public class Schedule {
 								System.out.println("p2 peek: " + p2.peek()); //67
 								System.out.println("This is last? 3 : " + t2.getName());
 								System.out.println(EST_store.get(EST_store.size()-1));
+								backtrack = false;
 							}
 							
 
@@ -485,6 +511,7 @@ public class Schedule {
 								backtrack = true;
 							} else {
 								System.out.println("This is feasible");
+								backtrack = false;
 							}
 							p1.push(p1.peek() + n.pop().getExecTime());
 							System.out.println("This is last? 5 : " + t2.getName());
