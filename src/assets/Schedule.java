@@ -379,6 +379,8 @@ public class Schedule {
 									
 									if (feasible == false) {
 										System.out.println("This is not feasible");
+										System.out.println("--------Backtrack Starts--------");
+										backtrack = true;
 									} else {
 										System.out.println("This is feasible");
 									}
@@ -453,6 +455,7 @@ public class Schedule {
 							
 							if (feasible == false) {
 								System.out.println("This is not feasible");
+								System.out.println("--------Backtrack Starts--------");
 								backtrack = true;
 								
 							} else {
@@ -478,6 +481,8 @@ public class Schedule {
 							
 							if (feasible == false) {
 								System.out.println("This is not feasible");
+								System.out.println("--------Backtrack Starts--------");
+								backtrack = true;
 							} else {
 								System.out.println("This is feasible");
 							}
