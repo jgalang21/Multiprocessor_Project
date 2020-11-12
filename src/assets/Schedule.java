@@ -16,7 +16,10 @@ public class Schedule {
 	private static Stack<Integer> p2 = new Stack<Integer>();
 	private static List<Task> executed = new ArrayList<Task>();
 	public static boolean feasible;
-
+	public static Task t1;
+	public static Task t2;
+	public static Task t3;
+	
 	public Schedule(List<Task> tasks, int winSize) {
 		this.tasks = tasks;
 		this.winSize = winSize;
@@ -40,22 +43,25 @@ public class Schedule {
 				// the window we're looking at
 				// s: "0 1 2" 3 4
 				// Task 1 2 3 selected
-				Task t1 = new Task("N", 0, 0, 0, "N");
-				Task t2 = new Task("N", 0, 0, 0, "N");
-				Task t3 = new Task("N", 0, 0, 0, "N");
+				//Task t1 = new Task("F", 0, 0, 0, "F");
+				//Task t2 = new Task("F", 0, 0, 0, "F");
+				//Task t3 = new Task("F", 0, 0, 0, "F");
+				System.out.println("s value: " + s);
+				System.out.println("Task size: "+ tasks.size());
 				
-				
-				if (s < tasks.size()-2) {
+				if (s < tasks.size()-2) { //s = 3 5-2 =3
 					t1 = tasks.get(s);
 					t2 = tasks.get(s + 1);
 					t3 = tasks.get(s + 2);
-				} else if (s == tasks.size()-1) {
+				} else if (tasks.size() - s == 2) {
 					t1 = tasks.get(s);
 					t2 = tasks.get(s + 1);
 				} else {
 					t1 = tasks.get(s);
 				}
-
+				
+				//System.out.println(t1.getName());
+				
 				int num_task = 3;
 
 				// Resource: shared resource can use shared and exclusive resources
@@ -176,6 +182,7 @@ public class Schedule {
 					}
 
 					if (t2.getUsage().equals("S")) {
+						System.out.println("p2.peek in the last: " + p2.peek());
 						h2 = t2.calc_heuristic(t2.getReadyTime(), p2.peek(), 0);
 						store.add(t2);
 						EST_store.add(highest_From_Three(t2.getReadyTime(), p2.peek(), 0));
@@ -483,12 +490,7 @@ public class Schedule {
 						System.out.println("Processor 1: " + p1.peek());
 						System.out.println("Processor 2: " + p2.peek());
 						
-						while (!p1.empty()) {
-							System.out.println(p1.pop());
-						}
-						while (!p2.empty()) {
-							System.out.println(p2.pop());
-						}
+
 						System.out.println("No more tasks remaining. Set is feasible");
 						
 						if (feasible == false) {
