@@ -14,6 +14,7 @@ public class Task implements Comparable<Task> {
 	private Integer wcet;
 	private Integer deadline;
 	private String usage;
+	private boolean feasible;
 
 	// we might need to add another parameter for the laxity heuristic that the
 	// professor emailed us about (?)
@@ -45,7 +46,10 @@ public class Task implements Comparable<Task> {
 	public String getUsage() {
 		return usage;
 	}
-
+	
+	public boolean getFeasible() {
+		return feasible;
+	}
 	public int calc_heuristic(int ready, int process, int resource) {
 
 		return highest_From_Three(ready, process, resource) + deadline;
